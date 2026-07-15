@@ -1,0 +1,7 @@
+/vendor/
+/var/
+/.git/
+/.github/
+/tests/
+/.php-cs-fixer.cache
+/.phpunit.cache

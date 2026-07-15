@@ -1,0 +1,15 @@
+{
+	# FrankenPHP worker mode: the app is booted once and kept warm.
+	frankenphp
+	auto_https off
+}
+
+:8080 {
+	root * /app/public
+	encode zstd br gzip
+
+	# Serve every request through the compiled worker.
+	php_server {
+		worker /app/public/worker.php
+	}
+}

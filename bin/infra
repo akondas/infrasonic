@@ -1,0 +1,35 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use Infrasonic\Console\Application;
+
+$root = getcwd();
+if (false === $root) {
+    fwrite(\STDERR, "Unable to determine working directory.\n");
+    exit(1);
+}
+
+$autoloaders = [
+    $root.'/vendor/autoload.php',
+    __DIR__.'/../vendor/autoload.php',
+    __DIR__.'/../../../autoload.php',
+];
+
+$loaded = false;
+foreach ($autoloaders as $autoloader) {
+    if (is_file($autoloader)) {
+        require $autoloader;
+        $loaded = true;
+        break;
+    }
+}
+
+if (!$loaded) {
+    fwrite(\STDERR, "Composer autoloader not found. Run 'composer install'.\n");
+    exit(1);
+}
+
+/* @var list<string> $argv */
+exit((new Application($root))->run($argv));
