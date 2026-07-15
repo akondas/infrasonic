@@ -1,0 +1,26 @@
+Makefile
+  s_0b9ba68cbca83a::t_4c654bf040d61d 8-11
+  s_0b9ba68cbca83a::t_f1c2f59b63e46d 27-28
+Dockerfile
+  s_0b9ba68cbca83a::t_027bcaff264398 24-26
+docker/php.ini
+  s_0b9ba68cbca83a::t_c5b6ac78111dc4 1-22
+bench/bench.php
+  s_0b9ba68cbca83a::t_f21dacc05df1aa 39-45
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "37ea1be1a70384b51d0ccb2a33f96adfeae2b15a",
+  "prompts": {},
+  "sessions": {
+    "s_0b9ba68cbca83a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "fc45438c-de94-458f-b56c-3ccca8361f14",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Arkadiusz Kondas <arkadiusz.kondas@gmail.com>"
+    }
+  }
+}
