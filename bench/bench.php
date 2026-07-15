@@ -36,9 +36,13 @@ $requests = [
     new Request('GET', '/add/20/22'),
 ];
 
-// Warm up caches (route tables, singletons).
-foreach ($requests as $request) {
-    $kernel->handle($request);
+// Warm up: prime route tables and singletons, and — critically — run enough
+// iterations for OPcache's JIT to compile the hot dispatch path before timing.
+// A handful of requests is not enough; tracing JIT compiles lazily, so too few
+// warm-up rounds leaves trace-compilation cost polluting the measured window.
+$warmup = min($iterations, 50_000);
+for ($i = 0; $i < $warmup; ++$i) {
+    $kernel->handle($requests[$i % 3]);
 }
 
 $start = hrtime(true);

@@ -5,6 +5,10 @@
 COMPOSE ?= docker compose
 CS_ENV  := PHP_CS_FIXER_IGNORE_ENV=1
 
+# Benchmark under production-like OPcache + JIT (override with e.g. JIT=function).
+JIT         ?= tracing
+BENCH_FLAGS := -d opcache.enable_cli=1 -d opcache.jit_buffer_size=64M -d opcache.jit=$(JIT)
+
 help: ## List available targets
 	@grep -hE '^[a-zA-Z0-9_-]+:.*?## ' $(MAKEFILE_LIST) \
 		| awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-14s\033[0m %s\n", $$1, $$2}'
@@ -20,8 +24,8 @@ build: ## Compile the app into var/compiled/
 serve: ## Run the PHP built-in dev server (per-request boot)
 	php bin/infra serve
 
-bench: build ## Benchmark the compiled kernel in-process
-	php bench/bench.php
+bench: build ## Benchmark the compiled kernel in-process (OPcache + JIT on)
+	php $(BENCH_FLAGS) bench/bench.php
 
 ## --- Quality -------------------------------------------------------------
 

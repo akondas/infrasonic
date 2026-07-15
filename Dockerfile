@@ -21,6 +21,9 @@ RUN composer dump-autoload --optimize --no-dev \
 # FrankenPHP reads its Caddyfile from /etc/frankenphp/Caddyfile.
 COPY Caddyfile /etc/frankenphp/Caddyfile
 
+# OPcache + JIT tuning for the resident worker (biggest per-request lever).
+COPY docker/php.ini "$PHP_INI_DIR/conf.d/zz-infrasonic.ini"
+
 ENV APP_DEBUG=false
 EXPOSE 8080
 
